@@ -1,0 +1,39 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node
+    *matTreeNodeDef="let node"
+    matTreeNodePadding
+    [style.background-color]="getNodeColor(node)"
+    [style.color]="getNodeColorText(node)"
+  >
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <button mat-button (click)="showDetails(node)">
+      {{node.name}} ({{node.duration}})
+    </button>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node
+    *matTreeNodeDef="let node;when: hasChild"
+    matTreeNodePadding
+    [style.background-color]="getNodeColor(node)"
+    [style.color]="getNodeColorText(node)"
+  >
+    <button
+      mat-icon-button
+      matTreeNodeToggle
+      [attr.aria-label]="'Toggle ' + node.name"
+    >
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    <button mat-button (click)="showDetails(node)">
+      {{node.name}} ({{node.duration}})
+    </button>
+  </mat-tree-node>
+</mat-tree>
+
+<!-- Copyright 2021 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
